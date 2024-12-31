@@ -1,14 +1,16 @@
 def main():
     students = []
     courses = []
+    marks = {}
     
     while True:
-        print("\nOptions:")
+        print("Options:")
         print("1. Input the number of students and their details")
         print("2. Input the number of courses and their details")
         print("3. Show list of students")
         print("4. Show list of courses")
-        print("5. Exit")
+        print("5. Input mark of students in the course.")
+        print("6. Exit")
         try:
             choice = int(input("Enter your choice: "))
         except ValueError:
@@ -29,6 +31,8 @@ def main():
             elif choice == 4:
                 print("\nCourse: ")
                 list_course(courses)
+            elif choice == 5:
+                input_mark(students, courses, marks)
             else:
                 print("Exiting the program.")
                 break
@@ -75,5 +79,31 @@ def list_course(courses):
         for i in courses:
             print(f"ID: {i['id']}, Name: {i['name']}")
 
+def input_mark(students, courses, marks):
+    course_id = input("Enter the course ID to input mark: ")
+    
+    course = None
+    for c in courses:
+        if c['id'] == course_id:
+            course = c
+            break
+    
+    if course is None:
+        print("Course not found.")
+        return
+    
+    for i in students:
+        while True:
+            try:
+                mark = int(input(f"Enter the mark for student {i['name']} with ID {i['id']}: "))
+                if mark < 0 or mark > 100:
+                    print("Invalid mark for student.")
+                if i['id'] not in marks:
+                    marks[i['id']] = {}
+                marks[i['id']][course['id']] = mark
+                break
+            except ValueError:
+                print("Invalid mark. Please enter a valid number")    
+    
 if __name__ == "__main__":
     main()
