@@ -46,7 +46,7 @@ class MarkManager:
         if not course:
             print("Course not found.")
             return
-        
+
         for student in students:
             while True:
                 try:
@@ -79,5 +79,63 @@ class MarkManager:
         for student in students:
             mark = self.__marks.get(student.get_id(), {}).get(course_id, "No mark available")
             print(f"{student.get_name()} (ID: {student.get_id()}): {mark}")
+
+def main():
+    students = []
+    courses = []
+    mark_manager = MarkManager()
+
+    while True:
+        print("\nOptions:")
+        print("1. Add students")
+        print("2. Add courses")
+        print("3. List students")
+        print("4. List courses")
+        print("5. Input marks")
+        print("6. Show marks")
+        print("7. Exit")
+
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            count = int(input("Enter number of students: "))
+            for i in range(count):
+                student_id = input("Enter Student ID: ")
+                name = input("Enter Student Name: ")
+                dob = input("Enter Student DOB (DD/MM/YYYY): ")
+                students.append(Student(student_id, name, dob))
+        elif choice == "2":
+            count = int(input("Enter the number of courses: "))
+            for i in range(count):
+                course_id = input("Enter course id: ")
+                name = input("Enter couse name: ")
+                courses.append(Course(course_id, name))
+        elif choice == "3":
+            print("\nList of Students:")
+            for student in students:
+                student.display()
+        elif choice == "4":
+            print("\nList of course: ")
+            for course in courses:
+                course.display()
+        elif choice == "5":
+            mark_manager.input_mark(students, courses)
+        elif choice == "6":
+            mark_manager.show_marks(students, courses)
+        elif choice == "7":
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid.")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+
 
 
